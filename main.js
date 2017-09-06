@@ -9,26 +9,59 @@ Tabletop.init({
 });
 
 function processData(data, tabletop) {
+  console.log(data);
   if (!data[0]) return;
 
   for (i in data) {
     if (data[i].Display !== 'y') continue;
 
-    var proj = data[i]['Project Name'];
-    if (!proj) continue;
+    var team = data[i]['Team'];
+    var teamKey = team.replace(' ', '');
+    if (!team) continue;
 
-    $('body').append('<div class="project-div" id="project-' + proj + '"></div>');
-    var div = '#project-' + proj;
+    $('body').append('<div class="project-div" id="project-' + teamKey + '"></div>');
+    var div = '#project-' + teamKey;
 
-    var org = data[i]['What is your organization and its mission?'];
-    var project = data[i]['What is your proposed problem and/or researchable question?'];
-    var impact = data[i]['Why does it matter?'];
+    var project = data[i]['Project'];
+    var products = data[i]['Products'];
+    var research = data[i]['Research'];
+    var learn = data[i]['Learn'];
 
-    $(div).append('<h1>Project ' + proj + '</h1>');
+    // These might be multiple people
+    var websites = data[i]['Website'].split(';').map(function(x) {return $.trim(x)});
+    var emails = data[i]['Email'].split(';').map(function(x) {return $.trim(x)});
+    var names = data[i]['Name'].split(';').map(function(x) {return $.trim(x)});
+    var orgs = data[i]['Organization'].split(';').map(function(x) {return $.trim(x)});
+
+    var namesFormatted = '';
+    for (j in names) {
+      if (namesFormatted != '') namesFormatted += ', ';
+      if (emails[j]) {
+        namesFormatted += '<a href="mailto:' + emails[j] + '">' + names[j] + '</a>';
+      } else {
+        namesFormatted += names[j];
+      }
+    }
+
+    var orgsFormatted = '';
+    for (j in orgs) {
+      if (orgsFormatted != '') orgsFormatted += ', ';
+      if (websites[j]) {
+        orgsFormatted += '<a href="' + websites[j] + '">' + orgs[j] + '</a>';
+      } else {
+        orgsFormatted += orgs[j];
+      }
+    }
+
+    $(div).append('<h1>Team ' + team + '</h1>');
     $(div).append('<div class="hr" style="background:#' + Math.random().toString(16).substr(-6) + '"></div>');
-    $(div).append('<p><span>ORGANIZATION</span><br>' + org + '</p>');
+    $(div).append('<p><span>CONTACT</span><br>' + namesFormatted + '</p>');
+    $(div).append('<p><span>ORGANIZATION</span><br>' + orgsFormatted + '</p>');
     $(div).append('<p><span>PROJECT</span><br>' + project + '</p>');
-    $(div).append('<p><span>IMPACT</span><br>' + impact + '</p>');
+    $(div).append('<p><span>PRODUCTS</span><br>' + products + '</p>');
+    if (learn) {
+      $(div).append('<p><span>ADDITIONAL</span><br><a href="' + learn + '">Learn more</a></p>');
+    }
     $(div).append('<p class="additional"></p>');
   }
 
@@ -56,7 +89,7 @@ function processStudentsAndFaculty(who) {
 
           choices.forEach(function(choice) {
             if (key.indexOf(choice) > -1) {
-              var proj = row[key].split(' ')[0];
+              var proj = row[key];
               if (!projects[proj]) {
                 projects[proj] = {};
               }
@@ -92,23 +125,7 @@ function processStudentsAndFaculty(who) {
           }
         }
 
-
-        /*
-        if (projects[proj]['1st']) {
-          var n = projects[proj]['1st'].length;
-          if (n > 0) {
-            if (SHOW_NAMES || who == 'f') {
-              message = projects[proj]['1st'].join(', ');
-            } else {
-              message = n + ' student' + (n == 1 ? '' : 's');
-            }
-            message += (who == 'f')
-              ? ' prefers this project.'
-              : ' listed this project as their first choice.';
-          }
-        } */
-
-        $('#project-' + proj + ' .additional').append(message);
+        $('#project-' + proj.replace(' ', '') + ' .additional').append(message);
       }
 
       if (who == 'f') {
