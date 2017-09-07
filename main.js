@@ -131,7 +131,7 @@ function processStudentsAndFaculty(who) {
           if (t) {
             var n = t.length;
             if (n > 0) {
-              message = 'Professor' + (n == 1 ? ' ' : 's ') + t.join(', ') + ' prefer' + (n != 1 ? '' : 's') + ' this project.<br>';
+              message = t.join(', ') + ' prefer' + (n != 1 ? '' : 's') + ' this project.<br>';
             }
           }
         }
