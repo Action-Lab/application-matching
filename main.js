@@ -15,7 +15,7 @@ function processData(data, tabletop) {
   for (i in data) {
     if (data[i].Display !== 'y') continue;
 
-    var team = data[i]['Team'];
+    var team = data[i]['Title'];
     var teamKey = team.replace(' ', '');
     if (!team) continue;
 
@@ -60,7 +60,7 @@ function processData(data, tabletop) {
       }
     }
 
-    $(div).append('<h1>Team ' + team + '</h1>');
+    $(div).append('<h1>' + team + ' Project</h1>');
     $(div).append('<div class="hr" style="background:#' + Math.random().toString(16).substr(-6) + '"></div>');
     $(div).append('<p><span>CONTACT</span><br>' + namesFormatted + '</p>');
     if (orgs[0]) {
