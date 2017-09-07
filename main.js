@@ -25,6 +25,7 @@ function processData(data, tabletop) {
     var project = data[i]['Project'];
     var products = data[i]['Products'];
     var research = data[i]['Research'];
+    var mission = data[i]['Mission'];
     var learn = data[i]['Learn'];
 
     // These might be multiple people
@@ -56,8 +57,12 @@ function processData(data, tabletop) {
     $(div).append('<h1>Team ' + team + '</h1>');
     $(div).append('<div class="hr" style="background:#' + Math.random().toString(16).substr(-6) + '"></div>');
     $(div).append('<p><span>CONTACT</span><br>' + namesFormatted + '</p>');
-    $(div).append('<p><span>ORGANIZATION</span><br>' + orgsFormatted + '</p>');
+    if (orgs[0]) {
+      $(div).append('<p><span>ORGANIZATION</span><br>' + orgsFormatted + '</p>');
+    }
+    $(div).append('<p><span>MISSION</span><br>' + mission + '</p>');
     $(div).append('<p><span>PROJECT</span><br>' + project + '</p>');
+    $(div).append('<p><span>RESEARCH</span><br>' + research + '</p>');
     $(div).append('<p><span>PRODUCTS</span><br>' + products + '</p>');
     if (learn) {
       $(div).append('<p><span>ADDITIONAL</span><br><a href="' + learn + '">Learn more</a></p>');
