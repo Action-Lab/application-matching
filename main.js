@@ -29,7 +29,13 @@ function processData(data, tabletop) {
     var learn = data[i]['Learn'];
 
     // These might be multiple people
-    var websites = data[i]['Website'].split(';').map(function(x) {return $.trim(x)});
+    var websites = data[i]['Website'].split(';').map(function(x) {
+      x = $.trim(x);
+      if (x && x.indexOf('http') != 0) {
+        x = 'http://' + x;
+      }
+      return $.trim(x)
+    });
     var emails = data[i]['Email'].split(';').map(function(x) {return $.trim(x)});
     var names = data[i]['Name'].split(';').map(function(x) {return $.trim(x)});
     var orgs = data[i]['Organization'].split(';').map(function(x) {return $.trim(x)});
