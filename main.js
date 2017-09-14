@@ -90,7 +90,7 @@ function processStudentsAndFaculty(who) {
 
       for (i in data) {
         var row = data[i];
-        var name = row['What is your name?'];
+        var name = row['Name'];
         var keys = Object.keys(row);
 
         var choices = ['1st', '2nd', '3rd', '4th', '5th'];
