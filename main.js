@@ -9,7 +9,6 @@ Tabletop.init({
 });
 
 function processData(data, tabletop) {
-  console.log(data);
   if (!data[0]) return;
 
   for (i in data) {
@@ -91,6 +90,14 @@ function processStudentsAndFaculty(who) {
       for (i in data) {
         var row = data[i];
         var name = row['Name'];
+        if ($.trim(row['Weblink']) != '') {
+          var link = $.trim(row['Weblink']);
+          if (link && link.indexOf('http') != 0) {
+            link = 'http://' + link;
+          }
+          name = '<a href="' + link + '">' + name + '</a>';
+        }
+
         var keys = Object.keys(row);
 
         var choices = ['1st', '2nd', '3rd', '4th', '5th'];
@@ -121,17 +128,17 @@ function processStudentsAndFaculty(who) {
 
         if (who === 's') {
           var t = projects[proj];
-          console.log(t)
           var n = Object.keys(t).map(function(x) {return t[x].length;}).reduce(function(a, b) {return a+b;});
           if (n > 0) {
-            message = n + ' student' + (n == 1 ? '' : 's') + ' prefer' + (n != 1 ? '' : 's') + ' this project.';
+            message = n + ' student' + (n == 1 ? ' is' : ' are') + ' interested in this project.';
           }
         } else {
+          console.log(projects[proj]);
           var t = projects[proj]['1st'];
           if (t) {
             var n = t.length;
             if (n > 0) {
-              message = t.join(', ') + ' prefer' + (n != 1 ? '' : 's') + ' this project.<br>';
+              message = t.join(', ') + (n == 1 ? ' is a ' : ' are') + ' potential faculty fellow' + (n == 1 ? '' : 's') + '.<br>';
             }
           }
         }
