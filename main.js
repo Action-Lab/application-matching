@@ -133,13 +133,16 @@ function processStudentsAndFaculty(who) {
             message = n + ' student' + (n == 1 ? ' is' : ' are') + ' interested in this project.';
           }
         } else {
-          console.log(projects[proj]);
-          var t = projects[proj]['1st'];
-          if (t) {
-            var n = t.length;
-            if (n > 0) {
-              message = t.join(', ') + (n == 1 ? ' is a ' : ' are') + ' potential faculty fellow' + (n == 1 ? '' : 's') + '.<br>';
+          var fellows = [];
+          for (idx in choices) {
+            if (projects[proj][choices[idx]]) {
+              fellows = fellows.concat(projects[proj][choices[idx]]);
             }
+          }
+
+          var n = fellows.length;
+          if (n > 0) {
+            message = fellows.join(', ') + (n == 1 ? ' is a ' : ' are') + ' potential faculty fellow' + (n == 1 ? '' : 's') + '.<br>';
           }
         }
 
