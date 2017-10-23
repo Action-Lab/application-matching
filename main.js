@@ -130,7 +130,7 @@ function processStudentsAndFaculty(who) {
           var t = projects[proj];
           var n = Object.keys(t).map(function(x) {return t[x].length;}).reduce(function(a, b) {return a+b;});
           if (n > 0) {
-            message = n + ' student' + (n == 1 ? ' is' : ' are') + ' interested in this project.';
+            message = n + ' students' + (n == 1 ? ' is' : ' are') + ' interested in this project.';
           }
         } else {
           var fellows = [];
