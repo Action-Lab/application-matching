@@ -8,5 +8,5 @@ http://commons.trincoll.edu/action-lab/apply/partners-and-proposals/
 Created by Ilya Ilyankou (@ilyankou) for Liberal Arts Action Lab, Hartford CT
 
 ## Dependencies
-Tabletop v1.5.3, https://github.com/jsoma/tabletop
+Tabletop v1.5.2, https://github.com/jsoma/tabletop
 jQuery v3.2.1, https://jquery.com/
