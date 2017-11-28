@@ -4,6 +4,10 @@ Display Google Forms data on web page and vote for preferences
 ## Live example
 http://commons.trincoll.edu/action-lab/apply/partners-and-proposals/
 
+## Requirements
+- Google Form responses must appear in Google Sheets, which must be published. Insert URLs in main.js
+- paste iframes for Google Form and also for this application-matching repo in the public web pages
+
 ## Credits
 Created by Ilya Ilyankou (@ilyankou) for Liberal Arts Action Lab, Hartford CT
 
