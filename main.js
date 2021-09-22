@@ -1,7 +1,7 @@
-// Links to CSV spreadsheets with responses
+// Links to published CSV spreadsheets with responses
 var partnersURL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQNIVsp1OfyIKxMwNxk9m1fKY13QDpye-Od9ZWwrBIlEe2TU8Pmjq30euL2D-FI6hGnUCJ8CvBUN2IN/pub?gid=307810549&single=true&output=csv';
-var studentsURL = 'https://docs.google.com/spreadsheets/d/1xb2gFO1So3U1r6mYPJ28XHDw7s-M2h49kSFHzbJODMI/pubhtml';
-var facultyURL = 'https://docs.google.com/spreadsheets/d/1TNppz6r-A8lC1tA5zwO_3AqRGYkNX-dgwazEIpEtudc/pubhtml';
+var studentsURL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTMuePeOwTvmHrJ-1v6kikGlN0NLQJPHczgQ3njmICiAtzmjHOu6J9zT2xwJGmF5l3fgynOVns09uKk/pub?gid=1986187034&single=true&output=csv';
+var facultyURL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQWcaCg7awhsoGnVbqTM5rFrmSq1TP_OaJ2TULWpfDdtBtBw66M2XPyihX1keA9kb053F7epZIMKGBo/pub?gid=661922043&single=true&output=csv';
 
 
 // Fetch Partners CSV using PapaParse
