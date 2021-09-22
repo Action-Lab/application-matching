@@ -2,12 +2,12 @@
 Display Google Forms data on web page and vote for preferences, used by Liberal Arts Action Lab to display community partner applications
 
 ## Live example
-http://commons.trincoll.edu/action-lab/apply/partners-and-proposals/
+https://action-lab.org/apply/partners-and-proposals/
 
 ## Requirements
 - Google Form responses must appear in Google Sheets, which must be published. Insert URLs in main.js
 - manually insert "Display" column in "Partners" Google Sheet, and manually insert "y" to approve display
-- manually insert "Title" column in "Partners" Google Sheet, and manually insert text to display title
+- manually insert "Title" column in "Partners" Google Sheet, and manually insert short text to display title
 - paste iframes for Google Form and also for this application-matching repo in the public web pages
 - NOTE: do NOT use this for high-security data, since the Google Sheet ID is visible in the code
 
