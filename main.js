@@ -1,23 +1,27 @@
-var partnersURL = 'https://docs.google.com/spreadsheets/d/1y_FVjRDYBBpUN4Pxf5iMjlAJH4bx9qhdzPoLw9fiU0A/pubhtml';
+// Links to CSV spreadsheets with responses
+var partnersURL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQNIVsp1OfyIKxMwNxk9m1fKY13QDpye-Od9ZWwrBIlEe2TU8Pmjq30euL2D-FI6hGnUCJ8CvBUN2IN/pub?gid=307810549&single=true&output=csv';
 var studentsURL = 'https://docs.google.com/spreadsheets/d/1xb2gFO1So3U1r6mYPJ28XHDw7s-M2h49kSFHzbJODMI/pubhtml';
 var facultyURL = 'https://docs.google.com/spreadsheets/d/1TNppz6r-A8lC1tA5zwO_3AqRGYkNX-dgwazEIpEtudc/pubhtml';
 
-Tabletop.init({
-  key: partnersURL,
-  callback: processData,
-  simpleSheet: true,
+
+// Fetch Partners CSV using PapaParse
+Papa.parse(partnersURL, {
+	download: true,
+  header: true,
+	complete: function(result) {
+    processData(result.data);
+	}
 });
 
-function processData(data, tabletop) {
-  if (!data[0]) return;
+function processData(data) {
 
-  for (i in data) {
+  for (var i in data) {
     if (data[i].Display !== 'y') continue;
 
-    var team = data[i]['Title'];
-    var teamKey = team.replace(' ', '');
+    var team = data[i].Title;
     if (!team) continue;
 
+    var teamKey = team.replace(' ', '');
     $('body').append('<div class="project-div" id="project-' + teamKey + '"></div>');
     var div = '#project-' + teamKey;
 
@@ -30,7 +34,7 @@ function processData(data, tabletop) {
     // These might be multiple people
     var websites = data[i]['Website'].split(';').map(function(x) {
       x = $.trim(x);
-      if (x && x.indexOf('http') != 0) {
+      if (x && x.indexOf('http') !== 0) {
         x = 'http://' + x;
       }
       return $.trim(x)
@@ -40,8 +44,8 @@ function processData(data, tabletop) {
     var orgs = data[i]['Organization'].split(';').map(function(x) {return $.trim(x)});
 
     var namesFormatted = '';
-    for (j in names) {
-      if (namesFormatted != '') namesFormatted += ', ';
+    for (var j in names) {
+      if (namesFormatted !== '') namesFormatted += ', ';
       if (emails[j]) {
         namesFormatted += '<a href="mailto:' + emails[j] + '">' + names[j] + '</a>';
       } else {
@@ -50,8 +54,8 @@ function processData(data, tabletop) {
     }
 
     var orgsFormatted = '';
-    for (j in orgs) {
-      if (orgsFormatted != '') orgsFormatted += ', ';
+    for (var j in orgs) {
+      if (orgsFormatted !== '') orgsFormatted += ', ';
       if (websites[j]) {
         orgsFormatted += '<a href="' + websites[j] + '">' + orgs[j] + '</a>';
       } else {
@@ -80,19 +84,21 @@ function processData(data, tabletop) {
 
 
 function processStudentsAndFaculty(who) {
-  Tabletop.init({
-    key: who == 's' ? studentsURL : facultyURL,
-    simpleSheet: true,
-    callback: function(data) {
 
+  Papa.parse(who === 's' ? studentsURL : facultyURL, {
+    download: true,
+    header: true,
+    complete: function(result) {
+
+      var data = result.data;
       var projects = {};
 
-      for (i in data) {
+      for (var i in data) {
         var row = data[i];
         var name = row['Name'];
-        if ($.trim(row['Weblink']) != '') {
+        if ($.trim(row['Weblink']) !== '') {
           var link = $.trim(row['Weblink']);
-          if (link && link.indexOf('http') != 0) {
+          if (link && link.indexOf('http') !== 0) {
             link = 'http://' + link;
           }
           name = '<a href="' + link + '">' + name + '</a>';
@@ -130,7 +136,7 @@ function processStudentsAndFaculty(who) {
           var t = projects[proj];
           var n = Object.keys(t).map(function(x) {return t[x].length;}).reduce(function(a, b) {return a+b;});
           if (n > 0) {
-            message = n + ' students' + (n == 1 ? ' is' : ' are') + ' interested in this project.';
+            message = n + ' students' + (n === 1 ? ' is' : ' are') + ' interested in this project.';
           }
         } else {
           var fellows = [];
@@ -142,17 +148,18 @@ function processStudentsAndFaculty(who) {
 
           var n = fellows.length;
           if (n > 0) {
-            message = fellows.join(', ') + (n == 1 ? ' is a ' : ' are') + ' potential faculty fellow' + (n == 1 ? '' : 's') + '.<br>';
+            message = fellows.join(', ') + (n === 1 ? ' is a ' : ' are') + ' potential faculty fellow' + (n === 1 ? '' : 's') + '.<br>';
           }
         }
 
         $('#project-' + proj.replace(' ', '') + ' .additional').append(message);
       }
 
-      if (who == 'f') {
+      if (who === 'f') {
         processStudentsAndFaculty('s');
       }
 
     }
   });
+
 }
