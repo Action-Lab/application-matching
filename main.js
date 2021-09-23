@@ -13,6 +13,14 @@ Papa.parse(partnersURL, {
 	}
 });
 
+
+// Function to remove special characters form string `s`
+var stripSpecialCharacters = function(s) {
+  return s.replace(/[^\w]/gi, '');
+}
+
+
+// Callback function for once Partners CSV is loaded
 function processData(data) {
 
   for (var i in data) {
@@ -21,9 +29,8 @@ function processData(data) {
     var team = data[i].Title;
     if (!team) continue;
 
-    var teamKey = team.replace(' ', '');
-    $('body').append('<div class="project-div" id="project-' + teamKey + '"></div>');
-    var div = '#project-' + teamKey;
+    $('body').append('<div class="project-div" id="project-' + stripSpecialCharacters(team) + '"></div>');
+    var div = '#project-' + stripSpecialCharacters(team);
 
     var project = data[i]['Project'];
     var products = data[i]['Products'];
@@ -83,6 +90,7 @@ function processData(data) {
 }
 
 
+// Reads students (who="s") & faculty (who="f") spreadsheets
 function processStudentsAndFaculty(who) {
 
   Papa.parse(who === 's' ? studentsURL : facultyURL, {
@@ -108,7 +116,7 @@ function processStudentsAndFaculty(who) {
 
         var choices = ['1st', '2nd', '3rd', '4th', '5th'];
 
-        for (j in keys) {
+        for (var j in keys) {
           var key = keys[j];
 
           choices.forEach(function(choice) {
@@ -128,7 +136,7 @@ function processStudentsAndFaculty(who) {
       }
 
       var projectKeys = Object.keys(projects);
-      for (p in projectKeys) {
+      for (var p in projectKeys) {
         var proj = projectKeys[p];
         var message = '';
 
@@ -136,11 +144,11 @@ function processStudentsAndFaculty(who) {
           var t = projects[proj];
           var n = Object.keys(t).map(function(x) {return t[x].length;}).reduce(function(a, b) {return a+b;});
           if (n > 0) {
-            message = n + ' students' + (n === 1 ? ' is' : ' are') + ' interested in this project.';
+            message = n + ' student' + (n === 1 ? ' is' : 's are') + ' interested in this project.';
           }
         } else {
           var fellows = [];
-          for (idx in choices) {
+          for (var idx in choices) {
             if (projects[proj][choices[idx]]) {
               fellows = fellows.concat(projects[proj][choices[idx]]);
             }
@@ -152,7 +160,7 @@ function processStudentsAndFaculty(who) {
           }
         }
 
-        $('#project-' + proj.replace(' ', '') + ' .additional').append(message);
+        $('#project-' + stripSpecialCharacters(proj) + ' .additional').append(message);
       }
 
       if (who === 'f') {
